@@ -1,0 +1,8 @@
+pettingzoo
+pygame
+numpy
+gymnasium
+supersuit
+stable-baselines3
+torch
+ray
