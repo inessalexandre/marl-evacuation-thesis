@@ -16,23 +16,23 @@ scenario_configs = {
         "total_steps_list": [1000000],
         "param_grid": [
             {"num_agents": 6}
-            #{"num_agents": 15}
+            #{"num_agents": 10}
         ]
     },
     3: {
         "total_steps_list": [1000000],
         "param_grid": [
             {"num_agents": 6, "num_obstacles": 2, "num_exits": 2},
-            {"num_agents": 10, "num_obstacles": 4, "num_exits": 3},
-            {"num_agents": 15, "num_obstacles": 6, "num_exits": 4}
+            {"num_agents": 8, "num_obstacles": 3, "num_exits": 3},
+            {"num_agents": 12, "num_obstacles": 4, "num_exits": 4}
         ]
     },
     4: {
         "total_steps_list": [1000000],
         "param_grid": [
             {"num_agents": 6},
-            {"num_agents": 10},
-            {"num_agents": 15}
+            {"num_agents": 8},
+            {"num_agents": 12}
         ]
     }
 }

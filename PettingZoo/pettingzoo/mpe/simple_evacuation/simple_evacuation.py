@@ -100,7 +100,7 @@ class Scenario(BaseScenario):
             ex.name = f"exit_{i}"
             ex.collide = False
             ex.movable = False
-            ex.size = 0.25
+            ex.size = 0.15
             ex.color = np.array([0.4, 0.7, 1.0])
 
         world.obstacles = [Landmark() for _ in range(num_obstacles)]
@@ -108,7 +108,7 @@ class Scenario(BaseScenario):
             ob.name = f"obstacle_{i}"
             ob.collide = True
             ob.movable = False
-            ob.size = 0.15
+            ob.size = 0.12
             ob.color = np.array([0.3, 0.3, 0.3])
 
         world.landmarks += world.exits + world.obstacles
