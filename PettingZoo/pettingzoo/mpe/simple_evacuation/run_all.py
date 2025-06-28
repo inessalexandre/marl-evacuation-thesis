@@ -2,25 +2,25 @@ from train_evac import train, evaluate, env_fn
 import itertools
 
 
-algos = ["ppo","a2c","dqn"]
-scenarios = [1]
+algos = ["ppo"]
+scenarios = [1, 2, 3]
 episodes = 2
 
 
 scenario_configs = {
     1: {
-        "total_steps_list": [1000000],
+        "total_steps_list": [20000],
         "param_grid": [{}]
     },
     2: {
-        "total_steps_list": [1000000],
+        "total_steps_list": [20000],
         "param_grid": [
-            {"num_agents": 6}
-            #{"num_agents": 10}
+            {"num_agents": 6},
+            {"num_agents": 10}
         ]
     },
     3: {
-        "total_steps_list": [1000000],
+        "total_steps_list": [20000],
         "param_grid": [
             {"num_agents": 6, "num_obstacles": 2, "num_exits": 2},
             {"num_agents": 8, "num_obstacles": 3, "num_exits": 3},
@@ -28,7 +28,7 @@ scenario_configs = {
         ]
     },
     4: {
-        "total_steps_list": [1000000],
+        "total_steps_list": [200000],
         "param_grid": [
             {"num_agents": 6},
             {"num_agents": 8},
