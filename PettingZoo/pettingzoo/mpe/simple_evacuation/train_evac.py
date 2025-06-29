@@ -34,7 +34,7 @@ ALGOS = {
 }
 
 
-def train(env_fn, algo="ppo", total_steps=100000, scenario_id=1, seed=0, **env_kwargs):
+def train(env_fn, algo="ppo", total_steps=250000, scenario_id=1, seed=0, **env_kwargs):
     """Treinar modelo com parâmetros simplificados"""
     # Remover parâmetros que não existem mais no ambiente
     clean_kwargs = {k: v for k, v in env_kwargs.items()
@@ -47,7 +47,7 @@ def train(env_fn, algo="ppo", total_steps=100000, scenario_id=1, seed=0, **env_k
     env = ss.concat_vec_envs_v1(env, 4, num_cpus=1, base_class="stable_baselines3")
 
     algo_class, policy_class = ALGOS[algo]
-    model = algo_class(policy_class, env, verbose=1)
+    model = algo_class(policy_class, env, verbose=1, device="cuda")
     model.learn(total_timesteps=total_steps)
 
     os.makedirs("models", exist_ok=True)
@@ -74,7 +74,7 @@ def evaluate(env_fn, algo="ppo", model_path=None, episodes=10, scenario_id=1, **
 
     if model_path is None:
         try:
-            model_path = max(glob.glob(f"models/{algo}_*.zip"), key=os.path.getctime)
+            model_path = max(glob.glob(f"models/{algo}_scenario{scenario_id}*.zip"), key=os.path.getctime)
         except ValueError:
             print("No trained model found.")
             return
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     config = {"max_cycles": 100}
 
     if args.train:
-        train(env_fn, algo=args.algo, total_steps=1000, scenario_id=args.scenario, **config)
+        train(env_fn, algo=args.algo, total_steps=250000, scenario_id=args.scenario, **config)
 
     if args.eval:
         evaluate(env_fn, algo=args.algo, episodes=4, scenario_id=args.scenario, **config)
