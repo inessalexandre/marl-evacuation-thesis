@@ -90,9 +90,10 @@ class Scenario(BaseScenario):
         # Configuração por cenário
         scenarios_config = {
             1: {"agents": 2, "obstacles": 0, "walls": 0, "exits": 0, "landmarks": 1, "hide_landmark": False, "comm": False},
-            2: {"agents": 6, "obstacles": 0, "walls": 4, "exits": 0, "landmarks": 1, "hide_landmark": False, "comm": False},
+            2: {"agents": 12, "obstacles": 0, "walls": 4, "exits": 0, "landmarks": 1, "hide_landmark": False, "comm": False},
             3: {"agents": 6, "obstacles": 3, "walls": 4, "exits": 0, "landmarks": 1, "hide_landmark": False, "comm": False},
             4: {"agents": 6, "obstacles": 0, "walls": 0, "exits": 0, "landmarks": 1, "hide_landmark": True, "comm": True},
+            5: {"agents": 6, "obstacles": 2, "walls": 0, "exits": 0, "landmarks": 1, "hide_landmark": True, "comm": True},
         }
 
         config = scenarios_config.get(scenario_id, scenarios_config[1])
@@ -189,12 +190,13 @@ class Scenario(BaseScenario):
             # Cenário 1: Dois agentes, um landmark
             world.landmarks[0].state.p_pos = np.array([0.8, 0.8])
             #positions = [np.array([-0.3, -0.8]), np.array([0.3, -0.8])]
-            positions = [np_random.uniform(-1, +1, world.dim_p), np_random.uniform(-1, +1, world.dim_p)]
+            # positions = [np_random.uniform(-1, +1, world.dim_p), np_random.uniform(-1, +1, world.dim_p)]
             # positions = [np_random.uniform(-1, +1, world.dim_p), np_random.uniform(-1, +1, world.dim_p),
-            #              np_random.uniform(-1, +1, world.dim_p), np_random.uniform(-1, +1, world.dim_p)]
+             #           np_random.uniform(-1, +1, world.dim_p), np_random.uniform(-1, +1, world.dim_p),
+              #          np_random.uniform(-1, +1, world.dim_p), np_random.uniform(-1, +1, world.dim_p)]
 
             for i, agent in enumerate(world.agents):
-                agent.state.p_pos = positions[i] if i < len(positions) else np.array([0.0, -0.8])
+                agent.state.p_pos = np_random.uniform(-1, +1, world.dim_p) #f i < len(positions) else np.array([0.0, -0.8])
 
         elif world.scenario_id == 2:
             # Cenário 2: Corredor estreito
@@ -207,15 +209,15 @@ class Scenario(BaseScenario):
             # ]
             x_range = (-0.3, +0.9)
             y_range = (-0.9, +0.9)
-            positions = [np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
-                         np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
-                         np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
-                         np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
-                         np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
-                         np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)])
-            ]
+            #positions = [np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
+            #             np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
+            #             np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
+            #             np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
+            #             np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)]),
+            #             np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)])
+            #]
             for i, agent in enumerate(world.agents):
-                agent.state.p_pos = positions[i] if i < len(positions) else np.array([0.0, 0.6])
+                agent.state.p_pos = np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)])
 
             world.walls[0].state.p_pos = np.array([-0.65, 0.3])
             world.walls[1].state.p_pos = np.array([-0.65, -0.3])
@@ -247,7 +249,7 @@ class Scenario(BaseScenario):
                          np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)])
             ]
             for i, agent in enumerate(world.agents):
-                agent.state.p_pos = positions[i] if i < len(positions) else np.array([0.0, 0.6])
+                agent.state.p_pos = np.array([np_random.uniform(*x_range), np_random.uniform(*y_range)])
 
             world.walls[0].state.p_pos = np.array([-0.65, 0.3])
             world.walls[1].state.p_pos = np.array([-0.65, -0.3])
@@ -263,12 +265,20 @@ class Scenario(BaseScenario):
         elif world.scenario_id == 4:
             # Cenário 4: Comunicação
             world.landmarks[0].state.p_pos = np.array([0.7, 0.7])
-            positions = [
-                np.array([-0.8, -0.8]), np.array([-0.8, 0.0]), np.array([-0.8, 0.8]),
-                np.array([0.0, -0.8]), np.array([0.8, -0.8]), np.array([0.8, 0.0])
-            ]
+
             for i, agent in enumerate(world.agents):
-                agent.state.p_pos = positions[i] if i < len(positions) else np.array([-0.8, -0.4 + i * 0.2])
+                agent.state.p_pos = np_random.uniform(-1, +1, world.dim_p)
+
+        elif world.scenario_id == 5:
+            # Cenário 5: Comunicação com obstáculos
+            world.landmarks[0].state.p_pos = np.array([0.7, 0.7])
+
+            for i, agent in enumerate(world.agents):
+                agent.state.p_pos = np_random.uniform(-1, +1, world.dim_p)
+
+            # Posicionar os 2 obstáculos no meio do ambiente
+            world.obstacles[0].state.p_pos = np.array([0.0, 0.2])
+            world.obstacles[1].state.p_pos = np.array([0.2, -0.2])
 
     def _create_corridor_walls(self, world):
         """Criar paredes do corredor para cenário 2 com gaps horizontal e vertical"""
@@ -324,7 +334,7 @@ class Scenario(BaseScenario):
 
         # Penalização por colisão com obstáculos
         for ob in world.obstacles + world.walls:
-            rew -= 2.0 * self.is_collision(agent, ob)
+            rew -= 1.0 * self.is_collision(agent, ob)
 
         # Penalização por colisão com outros agentes
         for a in world.agents:
@@ -356,7 +366,7 @@ class Scenario(BaseScenario):
             for mp in world.meeting_points
         ]
         min_dist = np.min(dists)
-        if min_dist < 0.05:
+        if min_dist < 0.1:
             agent.state.p_vel = 0.01 * agent.state.p_vel
             agent.goal_rewarded = True
         rew -= min_dist

@@ -1,9 +1,9 @@
-from train_evac import train, evaluate, env_fn
+from train_ecav import train, evaluate, env_fn
 import itertools
 
 
-algos = ["dqn"]
-scenarios = [1, 2, 3, 4]
+algos = ["ppo"]
+scenarios = [1,2]
 episodes = 2
 
 
@@ -15,7 +15,7 @@ scenario_configs = {
     2: {
         "total_steps_list": [500000],
         "param_grid": [
-            {"num_agents": 6}
+            {"num_agents": 10}
         ]
     },
     3: {
@@ -29,9 +29,14 @@ scenario_configs = {
         "param_grid": [
             {"num_agents": 6}
         ]
+    },
+    5: {
+        "total_steps_list": [500000],
+        "param_grid": [
+            {"num_agents": 6}
+        ]
     }
 }
-
 
 def run_all():
     for scenario_id in scenarios:
@@ -63,6 +68,7 @@ def run_all():
                 scenario_id=scenario_id,
                 **config
             )
+
 
 
 if __name__ == "__main__":

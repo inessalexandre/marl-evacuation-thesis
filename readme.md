@@ -22,8 +22,8 @@ git clone https://github.com/inessalexandre/your-repository-name.git
 cd PettingZoo
 
 # Create and activate a virtual environment
-python3.11 -m venv venv-marl
-source venv-marl/bin/activate
+python3.11 -m venv venv
+source venv/bin/activate
 
 # Install all dependencies
 pip install -r requirements.txt
@@ -35,6 +35,6 @@ After setting up the environment and activating the virtual environment:
 
 ```bash
 cd pettingzoo/mpe/simple_evacuation
-python train_evac.py --train --scenario 2 --algo ppo
+python train_evac_old.py --train --scenario 2 --algo ppo
 
 ```
